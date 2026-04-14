@@ -31,6 +31,29 @@ public class main {
         consVentas.get10VentasImporteTotal()
                 .forEach(System.out::println);
         // --- 6 ---
-
+        IO.println(consVentas.getFacturacionTotal());
+        // --- 7 ---
+        IO.println(consVentas.getEstadisticasPrecioUnitario());
+        // --- 8 ---
+        consVentas.getFacturacionTotalPorCategoria()
+                .forEach((k,v) -> IO.println(k + ": " + v));
+        // --- 9 ---
+        consVentas.getFacturacionTotalPorPais()
+                .forEach((k,v) -> IO.println(k + ": " + v + "€"));
+        // --- 10 ---
+        consVentas.getNUmeroDeVentasPorMetodoDePago()
+                .forEach((k,v) -> IO.println(k + ": " + v));
+        // --- 11 ---
+        consVentas.getFacturacionTotalPorCategoria()
+                .forEach((k,v) -> IO.println(k + ": " + v + "€"));
+        // --- 12 ---
+        consVentas.getVentasAgrupadasPorMes()
+                .forEach((k,v) -> IO.println(k + ": " + v.size() + " ventas"));
+        // --- 13 ---
+        consVentas.getCategoriaMasUnidadesVendidas();
+        // --- 14 ---
+        IO.println(consVentas.todasVentasBizumMenor200());
+        // --- 15 ---
+        IO.println(consVentas.getPorcentajeVentasTarjeta() + "%");
     }
 }

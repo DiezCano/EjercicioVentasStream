@@ -3,6 +3,7 @@ package servicios;
 import entidades.Venta;
 import lombok.Data;
 
+import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -80,13 +81,36 @@ public class ConsultasVentas {
                         Collectors.counting()));
     }
     //11. Facturación por categoría
+    public Map<String, Double> getFacturacionTotalPorCategoria() {
+        return ventas.stream()
+                .collect(Collectors.groupingBy(Venta::getCategoria,
+                        Collectors.summingDouble(Venta::getTotalLinea)));
+    }
 
     //12. Ventas agrupadas por mes (1–12)
-
+    public Map<Month, List<Venta>> getVentasAgrupadasPorMes() {
+        return ventas.stream()
+                .collect(Collectors.groupingBy(v ->
+                        v.getFecha().getMonth()));
+    }
     //13. Categoría con más unidades vendidas
-
+    public void getCategoriaMasUnidadesVendidas() {
+        Map<String, Integer> unidadesVendidasPorCategoria = ventas.stream()
+                .collect(Collectors.groupingBy(Venta::getCategoria,
+                        Collectors.summingInt(Venta::getCantidad)));
+    }
     //14. ¿Todas las ventas con BIZUM son < 200€?
-
+    public boolean todasVentasBizumMenor200() {
+        return ventas.stream()
+                .allMatch(v -> v.getMetodoPago().equals("BIZUM")
+                        && v.getTotalLinea() < 200);
+    }
     //15. Porcentaje de ventas pagadas con TARJETA
+    public double getPorcentajeVentasTarjeta() {
+        long totalTarjeta = ventas.stream()
+                .filter(v -> v.getMetodoPago().equals("TARJETA"))
+                .count();
+        return ((double) totalTarjeta / ventas.size()) * 100.0;
+    }
 
 }
