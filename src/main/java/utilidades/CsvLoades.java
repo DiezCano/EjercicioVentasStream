@@ -7,17 +7,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CsvLoades {
 
-    public static List<Venta> cargarVentas(String rutaFichero) {
+    public static List<Venta> cargarVentas() {
 
         Path ruta  = Paths.get("src/main/resources/ventas.csv");
-        List<Venta> ventas = null;
+        List<Venta> ventas = new ArrayList<>();
 
         try {
             List<String> filas = Files.readAllLines(ruta);
+            filas.remove(0);
            filas.forEach(l -> {
                List<String> campos = List.of(l.split(","));
                ventas.add(new Venta(
